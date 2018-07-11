@@ -195,6 +195,7 @@ function fits(next, restCommands, width, options, mustBeFlat) {
 
 function printDocToString(doc, options) {
   const width = options.printWidth;
+  const relativeWidth = options.relativePrintWidth;
   const newLine = options.newLine || "\n";
   let pos = 0;
   // cmds is basically a stack. We've turned a recursive call into a
@@ -253,7 +254,10 @@ function printDocToString(doc, options) {
               shouldRemeasure = false;
 
               const next = [ind, MODE_FLAT, doc.contents];
-              const rem = width - pos;
+              const rem = Math.min(
+                width - pos,
+                relativeWidth - pos + ind.length
+              );
 
               if (!doc.break && fits(next, cmds, rem, options)) {
                 cmds.push(next);
@@ -321,7 +325,7 @@ function printDocToString(doc, options) {
         // * Neither content item fits on the line without breaking
         //   -> output the first content item and the whitespace with "break".
         case "fill": {
-          const rem = width - pos;
+          const rem = Math.min(width - pos, relativeWidth - pos + ind.length);
 
           const parts = doc.parts;
           if (parts.length === 0) {

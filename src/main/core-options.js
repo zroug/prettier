@@ -153,6 +153,15 @@ const options = {
     description: "The line length where Prettier will try wrap.",
     range: { start: 0, end: Infinity, step: 1 }
   },
+  relativePrintWidth: {
+    since: "1.11.1",
+    category: CATEGORY_GLOBAL,
+    type: "int",
+    default: Infinity,
+    description:
+      "The line length after indentation where Prettier will try wrap.",
+    range: { start: 0, end: Infinity, step: 1 }
+  },
   rangeEnd: {
     since: "1.4.0",
     category: CATEGORY_SPECIAL,
